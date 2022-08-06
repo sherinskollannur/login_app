@@ -1,28 +1,38 @@
-import * as React from 'react'
-import Avatar from '@mui/material/Avatar'
-import Button from '@mui/material/Button'
-import CssBaseline from '@mui/material/CssBaseline'
-import TextField from '@mui/material/TextField'
-import Link from '@mui/material/Link'
-import Grid from '@mui/material/Grid'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-import Container from '@mui/material/Container'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { useHistory } from 'react-router-dom'
+import * as React from 'react';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useHistory } from 'react-router-dom';
+import { userActions } from '../../store/user';
+import { useSelector, useDispatch } from 'react-redux';
 
 export default function SignUp() {
-  const theme = createTheme()
-  const history = useHistory()
+  const theme = createTheme();
+  const history = useHistory();
+
+  const dispatch = useDispatch();
 
   const handleSubmit = (event) => {
-    event.preventDefault()
-    const data = new FormData(event.currentTarget)
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    })
-  }
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    dispatch(
+      userActions.addUserData({
+        email: data.get('email'),
+        password: data.get('password'),
+        userName: data.get('firstName') + ' ' + data.get('lastName'),
+      })
+    );
+
+    // localStorage.setItem('USER_DATA', 'fsdfsdfd');
+    history.push('/admin_dashboard');
+  };
 
   return (
     <div>
@@ -81,6 +91,7 @@ export default function SignUp() {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
+                    // error
                     required
                     fullWidth
                     name="password"
@@ -103,7 +114,7 @@ export default function SignUp() {
                 <Grid item xs>
                   <Link
                     onClick={() => {
-                      history.push('/')
+                      history.push('/');
                     }}
                     variant="body2"
                   >
@@ -116,5 +127,5 @@ export default function SignUp() {
         </Container>
       </ThemeProvider>
     </div>
-  )
+  );
 }

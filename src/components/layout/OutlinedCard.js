@@ -6,20 +6,16 @@ import CardContent from '@mui/material/CardContent'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 
-const card = (
-  <CardContent>
-    <Typography variant="h5">
-      Hi Sherin , Welcome to MyCare dashboard
-    </Typography>
-    <Typography variant="h5">User Name : Sherin</Typography>
-    <Typography variant="h5">Email : asdsad@gmail.com</Typography>
-  </CardContent>
-)
-
-export default function OutlinedCard() {
+export default function OutlinedCard(props) {
   return (
     <Card variant="outlined" style={{ margin: '10px' }}>
-      {card}
+      <CardContent>
+        <Typography variant="h5">
+          Hi {props.userName} , Welcome to MyCare dashboard
+        </Typography>
+        <Typography variant="h5">User Name : {props.userName}</Typography>
+        <Typography variant="h5">Email : {props.email}</Typography>
+      </CardContent>
     </Card>
   )
 }

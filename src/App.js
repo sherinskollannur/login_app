@@ -1,11 +1,19 @@
-import './App.css'
-import Login from './components/login/Login'
-import SignUp from './components/signup/SignUp'
-import UserDashboard from './components/user/UserDashboard'
-import AdminDashboard from './components/admin/AdminDashboard'
-import { Route, Switch } from 'react-router-dom'
+import './App.css';
+import Login from './components/login/Login';
+import SignUp from './components/signup/SignUp';
+import UserDashboard from './components/user/UserDashboard';
+import AdminDashboard from './components/admin/AdminDashboard';
+import { Route, Switch } from 'react-router-dom';
+import React, { useEffect } from 'react';
 
 function App() {
+  useEffect(() => {
+    localStorage.setItem(
+      'USER_DATA',
+      '[{"userName": "admin", "password": "admin", "email": "admin@gmail.com"}]'
+    );
+  }, []);
+
   return (
     <div className="App" style={{ backgroundColor: 'grey' }}>
       <Switch>
@@ -23,7 +31,7 @@ function App() {
         </Route>
       </Switch>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
