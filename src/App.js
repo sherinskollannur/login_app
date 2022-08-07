@@ -10,7 +10,7 @@ function App() {
   useEffect(() => {}, []);
 
   return (
-    <div className="App" style={{ backgroundColor: 'grey' }}>
+    <div className="App">
       <Switch>
         <Route path="/" exact>
           <Login />

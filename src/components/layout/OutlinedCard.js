@@ -17,7 +17,14 @@ export default function OutlinedCard({ loginUserData, registeredUsers }) {
   }, []);
 
   return (
-    <Card variant="outlined" style={{ margin: '10px' }}>
+    <Card
+      variant="outlined"
+      style={{
+        margin: '10px',
+        minWidth:
+          loginUserData.userType === 'admin' && registeredUsersLoaded && '50%',
+      }}
+    >
       <CardContent>
         {!registeredUsersLoaded && (
           <Typography variant="h5">
