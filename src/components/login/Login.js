@@ -37,13 +37,11 @@ export default function Login() {
     } else if (!isAuthenticated && loginData) {
       alert('Login Failed....Please enter correct username and password');
     }
-  }, [isAuthenticated, loginData]);
+  }, [authenticationCheckFn]);
 
   return (
     <div>
       <LoginForm authenticationCheckFn={authenticationCheckFn} />
-      <br />
-      {/* {loginData !== null && isAuthenticated === false && <p>login Failed</p>} */}
     </div>
   );
 }

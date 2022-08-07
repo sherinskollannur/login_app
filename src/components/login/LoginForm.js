@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -15,16 +15,26 @@ function LoginForm({ authenticationCheckFn }) {
   const theme = createTheme();
   const history = useHistory();
 
+  const [loginData, setLoginData] = useState({
+    email: 'email',
+    password: 'password',
+  });
+
   //Form Submit Handler
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const formData = {
-      email: data.get('email'),
-      password: data.get('password'),
-    };
+    let email = data.get('email');
+    let password = data.get('password');
+    setLoginData({ ...loginData, email, password });
+    if (email && password) {
+      const formData = {
+        email: email,
+        password: password,
+      };
 
-    authenticationCheckFn(formData);
+      authenticationCheckFn(formData);
+    }
   };
 
   return (
@@ -58,6 +68,11 @@ function LoginForm({ authenticationCheckFn }) {
               name="email"
               autoComplete="email"
               autoFocus
+              error={loginData.email === ''}
+              helperText={loginData.email === '' ? 'Empty!' : ' '}
+              onChange={(e) => {
+                setLoginData({ ...loginData, email: e.target.value });
+              }}
             />
             <TextField
               margin="normal"
@@ -68,6 +83,11 @@ function LoginForm({ authenticationCheckFn }) {
               type="password"
               id="password"
               autoComplete="current-password"
+              error={loginData.password === ''}
+              helperText={loginData.password === '' ? 'Empty!' : ' '}
+              onChange={(e) => {
+                setLoginData({ ...loginData, password: e.target.value });
+              }}
             />
 
             <Button

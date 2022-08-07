@@ -14,7 +14,7 @@ export const authSlice = createSlice({
           item.password === action.payload.password
       );
       state.isAuthenticated = index >= 0 ? true : false;
-      state.userType = userData[index].userType;
+      state.userType = index >= 0 ? userData[index].userType : '';
     },
 
     isLogout(state) {

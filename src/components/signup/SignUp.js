@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -19,20 +19,28 @@ export default function SignUp() {
 
   const dispatch = useDispatch();
 
+  const [signUpData, setSignUpData] = useState();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-
-    dispatch(
-      userActions.addUserData({
-        email: data.get('email'),
-        password: data.get('password'),
-        userName: data.get('firstName') + ' ' + data.get('lastName'),
-        userType: 'user',
-      })
-    );
-
-    history.push('/admin_dashboard');
+    setSignUpData(data);
+    if (
+      data.get('email') &&
+      data.get('password') &&
+      data.get('firstName') &&
+      data.get('lastName')
+    ) {
+      dispatch(
+        userActions.addUserData({
+          email: data.get('email'),
+          password: data.get('password'),
+          userName: data.get('firstName') + ' ' + data.get('lastName'),
+          userType: 'user',
+        })
+      );
+      history.push('/');
+    }
   };
 
   return (
@@ -68,6 +76,12 @@ export default function SignUp() {
                     id="firstName"
                     label="First Name"
                     autoFocus
+                    error={signUpData && signUpData.get('firstName') === ''}
+                    helperText={
+                      signUpData && signUpData.get('firstName') === ''
+                        ? 'Empty!'
+                        : ' '
+                    }
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -78,6 +92,12 @@ export default function SignUp() {
                     label="Last Name"
                     name="lastName"
                     autoComplete="family-name"
+                    error={signUpData && signUpData.get('lastName') === ''}
+                    helperText={
+                      signUpData && signUpData.get('lastName') === ''
+                        ? 'Empty!'
+                        : ' '
+                    }
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -88,6 +108,12 @@ export default function SignUp() {
                     label="Email Address"
                     name="email"
                     autoComplete="email"
+                    error={signUpData && signUpData.get('email') === ''}
+                    helperText={
+                      signUpData && signUpData.get('email') === ''
+                        ? 'Empty!'
+                        : ' '
+                    }
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -100,6 +126,12 @@ export default function SignUp() {
                     type="password"
                     id="password"
                     autoComplete="new-password"
+                    error={signUpData && signUpData.get('password') === ''}
+                    helperText={
+                      signUpData && signUpData.get('password') === ''
+                        ? 'Empty!'
+                        : ' '
+                    }
                   />
                 </Grid>
               </Grid>
