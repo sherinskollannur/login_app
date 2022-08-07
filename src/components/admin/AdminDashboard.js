@@ -3,20 +3,30 @@ import OutlinedCard from '../layout/OutlinedCard';
 import Header from '../layout/Header';
 import './AdminDashboard.css';
 import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 
 function AdminDashboard() {
+  const location = useLocation();
+
   const userData = useSelector((state) => state.users);
 
-  console.log(userData);
+  const loginUserData = userData.find(
+    (user) => user.email === location.state.loginData.email
+  );
+  console.log(loginUserData);
 
   return (
     <Header>
-      <OutlinedCard />
+      <OutlinedCard loginUserData={loginUserData} />
       <h2 style={{ marginTop: '50px' }}>Registered Users</h2>
 
       <div className="card_wrapper">
-        {userData.map(({ userName, email }, index) => (
-          <OutlinedCard userName={userName} email={email} key={index} />
+        {userData.map((user, index) => (
+          <OutlinedCard
+            loginUserData={loginUserData}
+            registeredUsers={user}
+            key={index}
+          />
         ))}
       </div>
     </Header>

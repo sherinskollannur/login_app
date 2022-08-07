@@ -12,7 +12,7 @@ export default function Login() {
   let isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   let userType = useSelector((state) => state.auth.userType);
 
-  //   alert(isAuthenticated);
+  //   alert(userType);
   const [loginData, setLoginData] = useState(null);
 
   //Authentication Check Function
@@ -26,19 +26,24 @@ export default function Login() {
     //Check authentication and redirect
     if (isAuthenticated) {
       userType === 'admin'
-        ? history.push('/admin_dashboard')
-        : history.push('/user_dashboard');
+        ? history.push({
+            pathname: '/admin_dashboard',
+            state: { loginData: loginData },
+          })
+        : history.push({
+            pathname: '/user_dashboard',
+            state: { loginData: loginData },
+          });
+    } else if (!isAuthenticated && loginData) {
+      alert('Login Failed....Please enter correct username and password');
     }
-    // else if (!isAuthenticated && loginData) {
-    //   alert('Login Failed....Please enter correct username and password');
-    // }
-  }, []);
+  }, [isAuthenticated, loginData]);
 
   return (
     <div>
       <LoginForm authenticationCheckFn={authenticationCheckFn} />
       <br />
-      {loginData !== null && isAuthenticated === false && <p>login Failed</p>}
+      {/* {loginData !== null && isAuthenticated === false && <p>login Failed</p>} */}
     </div>
   );
 }
