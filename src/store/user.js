@@ -23,7 +23,6 @@ export const userSlice = createSlice({
         state.push(action.payload);
         localStorage.setItem('userDataLocal', JSON.stringify(state));
       }
-      console.log(action.payload);
     },
   },
 });

@@ -13,7 +13,6 @@ function AdminDashboard() {
   const loginUserData = userData.find(
     (user) => user.email === location.state.loginData.email
   );
-  console.log(loginUserData);
 
   return (
     <Header>
