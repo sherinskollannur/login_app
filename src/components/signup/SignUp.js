@@ -11,26 +11,19 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useHistory } from 'react-router-dom';
 import { userActions } from '../../store/user';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function SignUp() {
   const theme = createTheme();
   const history = useHistory();
 
   const dispatch = useDispatch();
-
+  const userData = useSelector((state) => state.users);
   const [signUpData, setSignUpData] = useState();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    setSignUpData(data);
-    if (
-      data.get('email') &&
-      data.get('password') &&
-      data.get('firstName') &&
-      data.get('lastName')
-    ) {
+  const duplicateUserCheck = (data) => {
+    let index = userData.findIndex((user) => user.email === data.get('email'));
+    if (index === -1) {
       dispatch(
         userActions.addUserData({
           email: data.get('email'),
@@ -40,6 +33,24 @@ export default function SignUp() {
         })
       );
       history.push('/');
+      alert('User Created');
+    } else {
+      alert('User already existed..Try another email');
+    }
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+
+    setSignUpData(data);
+    if (
+      data.get('email') &&
+      data.get('password') &&
+      data.get('firstName') &&
+      data.get('lastName')
+    ) {
+      duplicateUserCheck(data);
     }
   };
 

@@ -11,15 +11,18 @@ if (!initialLocal) {
 
 const userInitialState = JSON.parse(localStorage.getItem('userDataLocal'));
 
-console.log(userInitialState);
-
 export const userSlice = createSlice({
   name: 'user',
   initialState: userInitialState,
   reducers: {
     addUserData(state, action) {
-      state.push(action.payload);
-      localStorage.setItem('userDataLocal', JSON.stringify(state));
+      let index = state.findIndex(
+        (user) => user.email === action.payload.email
+      );
+      if (index === -1) {
+        state.push(action.payload);
+        localStorage.setItem('userDataLocal', JSON.stringify(state));
+      }
       console.log(action.payload);
     },
   },
