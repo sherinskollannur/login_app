@@ -7,12 +7,7 @@ import { Route, Switch } from 'react-router-dom';
 import React, { useEffect } from 'react';
 
 function App() {
-  useEffect(() => {
-    localStorage.setItem(
-      'USER_DATA',
-      '[{"userName": "admin", "password": "admin", "email": "admin@gmail.com"}]'
-    );
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <div className="App" style={{ backgroundColor: 'grey' }}>

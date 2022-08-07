@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -11,7 +11,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useHistory } from 'react-router-dom';
 import { userActions } from '../../store/user';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 export default function SignUp() {
   const theme = createTheme();
@@ -22,15 +22,16 @@ export default function SignUp() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+
     dispatch(
       userActions.addUserData({
         email: data.get('email'),
         password: data.get('password'),
         userName: data.get('firstName') + ' ' + data.get('lastName'),
+        userType: 'user',
       })
     );
 
-    // localStorage.setItem('USER_DATA', 'fsdfsdfd');
     history.push('/admin_dashboard');
   };
 

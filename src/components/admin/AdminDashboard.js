@@ -15,8 +15,8 @@ function AdminDashboard() {
       <h2 style={{ marginTop: '50px' }}>Registered Users</h2>
 
       <div className="card_wrapper">
-        {userData.map(({ userName, email }) => (
-          <OutlinedCard userName={userName} email={email} />
+        {userData.map(({ userName, email }, index) => (
+          <OutlinedCard userName={userName} email={email} key={index} />
         ))}
       </div>
     </Header>

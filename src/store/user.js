@@ -1,6 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const userInitialState = JSON.parse(localStorage.getItem('USER_DATA'));
+let initialLocal = localStorage.getItem('userDataLocal');
+
+if (!initialLocal) {
+  localStorage.setItem(
+    'userDataLocal',
+    '[{"userName": "admin", "password": "admin", "email": "admin@gmail.com","userType":"admin"}]'
+  );
+}
+
+const userInitialState = JSON.parse(localStorage.getItem('userDataLocal'));
 
 console.log(userInitialState);
 
@@ -10,11 +19,8 @@ export const userSlice = createSlice({
   reducers: {
     addUserData(state, action) {
       state.push(action.payload);
-      let arr = JSON.parse(localStorage.getItem('USER_DATA'));
-      console.log(arr);
+      localStorage.setItem('userDataLocal', JSON.stringify(state));
       console.log(action.payload);
-
-      localStorage.setItem('USER_DATA', arr.push(action.payload));
     },
   },
 });
