@@ -3,11 +3,12 @@ import Login from './components/login/Login';
 import SignUp from './components/signup/SignUp';
 import UserDashboard from './components/user/UserDashboard';
 import AdminDashboard from './components/admin/AdminDashboard';
-import { Route, Switch } from 'react-router-dom';
-import React, { useEffect } from 'react';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import React from 'react';
+import { useSelector } from 'react-redux';
 
 function App() {
-  useEffect(() => {}, []);
+  let isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   return (
     <div className="App">
@@ -18,11 +19,18 @@ function App() {
         <Route path="/sign_up">
           <SignUp />
         </Route>
-        <Route path="/user_dashboard">
-          <UserDashboard />
-        </Route>
-        <Route path="/admin_dashboard">
-          <AdminDashboard />
+        {isAuthenticated && (
+          <Route path="/user_dashboard">
+            <UserDashboard />
+          </Route>
+        )}
+        {isAuthenticated && (
+          <Route path="/admin_dashboard">
+            <AdminDashboard />
+          </Route>
+        )}
+        <Route path="*">
+          <Redirect to="/" />
         </Route>
       </Switch>
     </div>
